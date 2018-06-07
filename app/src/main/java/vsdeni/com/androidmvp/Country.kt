@@ -31,6 +31,10 @@ data class Country(val id: Long, val name: String, val flag_32: String, val flag
             return arrayOfNulls(size)
         }
     }
+
+    override fun toString(): String {
+        return name
+    }
 }
 
 val ABSENT_COUNTRY = Country(-1, "", "", "")

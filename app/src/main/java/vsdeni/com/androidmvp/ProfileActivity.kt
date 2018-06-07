@@ -2,8 +2,10 @@ package vsdeni.com.androidmvp
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ArrayAdapter
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_profile.*
+
 
 class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallback {
     private lateinit var presenter: ProfilePresenter
@@ -17,17 +19,13 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
         supportActionBar?.title = getString(R.string.toolbar_title_profile)
 
         presenter = ProfilePresenterImpl(this,
-                GetProfileInteractor(ProfileDataSource()),
-                SaveProfileInteractor(ProfileDataSource()),
-                GetCountriesInteractor(CountriesDataSource(this, GsonBuilder().create())),
-                object : Schedulers {})
-
-        user_country.setOnClickListener({ presenter.onCountryClick() })
+                GetProfileInteractor(ProfileDataSource(), CountriesDataSource(this, GsonBuilder().create())),
+                SaveProfileInteractor(ProfileDataSource()))
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.onStart()
+        presenter.loadProfile()
     }
 
     override fun onCountrySelected(country: Country) {
@@ -38,14 +36,13 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
         user_name.setText(name)
     }
 
-    override fun showCountry(country: Country?) {
-        user_country.text = country?.name
-        user_country.tag = country
-    }
+    override fun showCountry(country: Country?, countries: Collection<Country>) {
+        val adapter = ArrayAdapter<Country>(this,
+                android.R.layout.simple_spinner_item,
+                countries.toTypedArray())
 
-    override fun showCountriesPopup(countries: Collection<Country>) {
-        val dialog = CountryPickerDialog.newInstance("Countries", countries, getCountry())
-        dialog.show(supportFragmentManager, "countries")
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        user_country.adapter = adapter
     }
 
     override fun getName(): String =

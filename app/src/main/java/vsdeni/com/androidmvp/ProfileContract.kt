@@ -3,9 +3,7 @@ package vsdeni.com.androidmvp
 interface ProfileView {
     fun showName(name: String)
 
-    fun showCountry(country: Country?)
-
-    fun showCountriesPopup(countries: Collection<Country>)
+    fun showCountry(country: Country?, availableCountries: Collection<Country>)
 
     fun getName(): String
 
@@ -13,12 +11,7 @@ interface ProfileView {
 }
 
 interface ProfilePresenter {
-    fun onStart()
-
-    fun onStop()
-
-    fun onCountryClick()
+    fun loadProfile()
 
     fun onSaveClick()
 }
-

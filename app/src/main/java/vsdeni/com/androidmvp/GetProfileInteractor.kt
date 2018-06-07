@@ -1,21 +1,28 @@
 package vsdeni.com.androidmvp
 
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 
 
-class GetProfileInteractor(private val profileRepository: ProfileRepository) {
+class GetProfileInteractor(private val profileRepository: ProfileRepository,
+                           private val countriesRepository: CountriesRepository) {
 
     fun execute(): Single<ProfileViewModel> =
-            profileRepository
-                    .getUserCountry()
-                    .switchIfEmpty(Single.just(ABSENT_COUNTRY))
-                    .zipWith(profileRepository
+            Single.zip(
+                    profileRepository
+                            .getUserCountry()
+                            .switchIfEmpty(Single.just(ABSENT_COUNTRY)),
+
+                    countriesRepository
+                            .getCountries()
+                            .toList(),
+
+                    profileRepository
                             .getUserName()
                             .switchIfEmpty(Single.just("")),
-                            BiFunction<Country, String, ProfileViewModel>(
-                                    { country, name ->
-                                        ProfileViewModel(name, country)
-                                    }
-                            ))
+
+                    Function3({ country, countries, name ->
+                        ProfileViewModel(name, country, countries)
+                    })
+            )
 }
