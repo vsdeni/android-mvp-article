@@ -43,6 +43,7 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         user_country.adapter = adapter
+        user_country.setSelection(countries.indexOf(countries.firstOrNull { it.id == country?.id }))
     }
 
     override fun getName(): String =
