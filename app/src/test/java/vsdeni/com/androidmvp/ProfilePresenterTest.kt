@@ -52,11 +52,10 @@ class ProfilePresenterTest {
 
         `when`(countriesRepository.getCountries()).thenReturn(Observable.just(ABSENT_COUNTRY))
 
-        profilePresenter = ProfilePresenterImpl(profileView,
-                getProfileInteractor,
-                saveProfileInteractor,
-                GetCountriesInteractor(countriesRepository),
-                object : Schedulers {})
+        profilePresenter = ProfilePresenterImpl(view = profileView,
+                getProfileInteractor = getProfileInteractor,
+                saveProfileInteractor = saveProfileInteractor,
+                getCountriesInteractor = GetCountriesInteractor(countriesRepository))
     }
 
     @Test

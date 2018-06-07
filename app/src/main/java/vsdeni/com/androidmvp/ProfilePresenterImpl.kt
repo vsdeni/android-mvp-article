@@ -5,7 +5,7 @@ class ProfilePresenterImpl(private val view: ProfileView,
                            private val getProfileInteractor: GetProfileInteractor,
                            private val saveProfileInteractor: SaveProfileInteractor,
                            private val getCountriesInteractor: GetCountriesInteractor,
-                           private val schedulers: Schedulers) : ProfilePresenter {
+                           private val schedulers: Schedulers = object : Schedulers {}) : ProfilePresenter {
 
     override fun onStart() {
         loadProfileData({ user ->
