@@ -38,7 +38,7 @@ class ProfilePresenterImpl(private val getProfileInteractor: GetProfileInteracto
 
     private fun saveProfile(onSaved: () -> Unit) {
         saveProfileInteractor.execute(view!!.getName(), view!!.getCountry())
-                .observeOn(schedulers.background())
+                .subscribeOn(schedulers.background())
                 .observeOn(schedulers.ui())
                 .subscribe({
                     onSaved.invoke()
