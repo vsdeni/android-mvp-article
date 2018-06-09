@@ -32,7 +32,7 @@ class GetProfileInteractorTest {
     @Test
     @Throws(Exception::class)
     fun profileCountry_correct() {
-        Assert.assertEquals("172", profileData.userCountry.id)
+        Assert.assertEquals("172", profileData.country?.id)
     }
 
     @Test
