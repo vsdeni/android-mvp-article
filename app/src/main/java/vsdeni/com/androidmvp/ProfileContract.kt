@@ -11,6 +11,10 @@ interface ProfileView {
 }
 
 interface ProfilePresenter {
+    fun attachView(profileView: ProfileView)
+
+    fun detachView(profileView: ProfileView)
+
     fun loadProfile()
 
     fun onSaveClick()

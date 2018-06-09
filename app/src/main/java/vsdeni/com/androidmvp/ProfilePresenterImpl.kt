@@ -1,19 +1,29 @@
 package vsdeni.com.androidmvp
 
+data class ProfileViewModel(val name: String, val country: Country?, val availableCountries: Collection<Country>)
 
-class ProfilePresenterImpl(private val view: ProfileView,
-                           private val getProfileInteractor: GetProfileInteractor,
+class ProfilePresenterImpl(private val getProfileInteractor: GetProfileInteractor,
                            private val saveProfileInteractor: SaveProfileInteractor,
                            private val schedulers: Schedulers = object : Schedulers {}) : ProfilePresenter {
 
+    private var view: ProfileView? = null
+
+    override fun attachView(profileView: ProfileView) {
+        this.view = profileView
+    }
+
+    override fun detachView(profileView: ProfileView) {
+        this.view = null
+    }
+
     override fun loadProfile() {
-        loadProfileData(onLoaded = { user ->
-            view.showName(user.name)
-            view.showCountry(user.country, user.countries)
+        loadProfile(onLoaded = { profile ->
+            view?.showName(profile.name)
+            view?.showCountry(profile.country, profile.availableCountries)
         })
     }
 
-    private fun loadProfileData(onLoaded: (ProfileViewModel) -> Unit) {
+    private fun loadProfile(onLoaded: (ProfileViewModel) -> Unit) {
         getProfileInteractor.execute()
                 .subscribeOn(schedulers.background())
                 .observeOn(schedulers.ui())
@@ -27,7 +37,7 @@ class ProfilePresenterImpl(private val view: ProfileView,
     }
 
     private fun saveProfile(onSaved: () -> Unit) {
-        saveProfileInteractor.execute(view.getName(), view.getCountry())
+        saveProfileInteractor.execute(view!!.getName(), view!!.getCountry())
                 .observeOn(schedulers.background())
                 .observeOn(schedulers.ui())
                 .subscribe({
