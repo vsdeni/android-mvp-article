@@ -2,18 +2,21 @@ package vsdeni.com.androidmvp
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
 class ProfileActivity : AppCompatActivity(), ProfileView {
     private lateinit var presenter: ProfilePresenter
+    private lateinit var adapter: CountriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         initToolbar()
+
+        adapter = CountriesAdapter()
+        user_country.adapter = adapter
 
         presenter = Injector(applicationContext).provideProfilePresenter()
         presenter.attachView(this)
@@ -39,15 +42,20 @@ class ProfileActivity : AppCompatActivity(), ProfileView {
         user_name.setText(name)
     }
 
-    override fun showCountry(country: Country?, availableCountries: Collection<Country>) {
-        val adapter = ArrayAdapter<Country>(this,
-                android.R.layout.simple_spinner_item,
-                availableCountries.toTypedArray())
+    override fun showCountry(country: Country?) {
+        user_country.tag = country//save initial value
+        presenter.loadCountries()
+    }
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        user_country.adapter = adapter
-        country?.let {
-            user_country.setSelection(availableCountries.getPositionById(it.id))
+    override fun showCountries(countries: Collection<Country>) {
+        adapter.data = countries.toList()
+        adapter.notifyDataSetChanged()
+        selectCountry()
+    }
+
+    private fun selectCountry() {
+        user_country.tag?.run { this as Country }?.let { country ->
+            adapter.data?.let { user_country.setSelection(it.getPositionById(country.id)) }
         }
     }
 
@@ -56,10 +64,10 @@ class ProfileActivity : AppCompatActivity(), ProfileView {
 
 
     override fun country(): Country =
-            user_country.tag as Country
+            user_country.selectedItem as Country
 
 }
 
-private fun Collection<Country>.getPositionById(id: Long): Int {
+private fun List<Country>.getPositionById(id: Long): Int {
     return this.indexOf(this.firstOrNull { it.id == id })
 }

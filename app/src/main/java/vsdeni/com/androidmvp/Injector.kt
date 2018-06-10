@@ -8,11 +8,16 @@ class Injector(val context: Context) {
     fun provideProfilePresenter(): ProfilePresenter {
         return ProfilePresenterImpl(
                 provideGetProfileInteractor(),
-                provideSaveProfileInteractor())
+                provideSaveProfileInteractor(),
+                provideGetCountriesInteractor())
     }
 
     fun provideGetProfileInteractor(): GetProfileInteractor {
-        return GetProfileInteractor(provideProfileRepository(), provideCountriesRepository())
+        return GetProfileInteractor(provideProfileRepository())
+    }
+
+    fun provideGetCountriesInteractor(): GetCountriesInteractor {
+        return GetCountriesInteractor(provideCountriesRepository())
     }
 
     fun provideSaveProfileInteractor(): SaveProfileInteractor {

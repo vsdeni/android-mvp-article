@@ -32,7 +32,7 @@ class CountriesAdapter : BaseAdapter() {
             view.tag = holder
         }
         holder.title.text = country?.name
-        holder.active.isChecked = country?.id == active?.id ?: -1
+        holder.active?.isChecked = country?.id == active?.id ?: -1
         Glide.with(view!!)
                 .load(Uri.parse("file:///android_asset/flags/" + country?.flag_128))
                 .into(holder.icon)
@@ -49,4 +49,4 @@ class CountriesAdapter : BaseAdapter() {
             data?.size ?: 0
 }
 
-data class ViewHolder(val icon: ImageView, val title: TextView, val active: CheckBox)
+data class ViewHolder(val icon: ImageView, val title: TextView, val active: CheckBox?)
