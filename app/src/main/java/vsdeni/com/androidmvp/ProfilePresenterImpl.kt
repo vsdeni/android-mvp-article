@@ -32,12 +32,12 @@ class ProfilePresenterImpl(private val getProfileInteractor: GetProfileInteracto
                 }, { error -> error.printStackTrace() })
     }
 
-    override fun onSaveClick() {
+    override fun saveProfile() {
         saveProfile(onSaved = {})
     }
 
     private fun saveProfile(onSaved: () -> Unit) {
-        saveProfileInteractor.execute(view!!.getName(), view!!.getCountry())
+        saveProfileInteractor.execute(view!!.name(), view!!.country())
                 .subscribeOn(schedulers.background())
                 .observeOn(schedulers.ui())
                 .subscribe({

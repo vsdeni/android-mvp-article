@@ -70,4 +70,10 @@ class ProfilePresenterTest {
         profilePresenter.loadProfile()
         verify(profileView).showCountry(ArgumentMatchers.any(), ArgumentMatchers.anyCollection())
     }
+
+    @Test
+    fun saveProfile_ShowCountries() {
+        profilePresenter.loadProfile()
+        verify(profileView).showCountry(ArgumentMatchers.any(), ArgumentMatchers.anyCollection())
+    }
 }

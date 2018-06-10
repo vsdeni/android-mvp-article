@@ -5,9 +5,9 @@ interface ProfileView {
 
     fun showCountry(country: Country?, availableCountries: Collection<Country>)
 
-    fun getName(): String
+    fun name(): String
 
-    fun getCountry(): Country?
+    fun country(): Country?
 }
 
 interface ProfilePresenter {
@@ -17,5 +17,5 @@ interface ProfilePresenter {
 
     fun loadProfile()
 
-    fun onSaveClick()
+    fun saveProfile()
 }

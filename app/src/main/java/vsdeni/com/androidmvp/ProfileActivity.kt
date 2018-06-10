@@ -51,11 +51,11 @@ class ProfileActivity : AppCompatActivity(), ProfileView {
         }
     }
 
-    override fun getName(): String =
+    override fun name(): String =
             user_name.text.toString()
 
 
-    override fun getCountry(): Country =
+    override fun country(): Country =
             user_country.tag as Country
 
 }
