@@ -5,7 +5,7 @@ interface ProfileView {
 
     fun showCountry(country: Country?)
 
-    fun showCountries(countries: Collection<Country>)
+    fun showCountriesPicker(countries: Collection<Country>)
 
     fun name(): String
 
@@ -15,7 +15,7 @@ interface ProfileView {
 interface ProfilePresenter {
     fun attachView(profileView: ProfileView)
 
-    fun detachView(profileView: ProfileView)
+    fun detachView()
 
     fun loadCountries()
 

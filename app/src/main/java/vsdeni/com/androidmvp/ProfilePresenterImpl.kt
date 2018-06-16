@@ -13,7 +13,7 @@ class ProfilePresenterImpl(private val getProfileInteractor: GetProfileInteracto
         this.view = profileView
     }
 
-    override fun detachView(profileView: ProfileView) {
+    override fun detachView() {
         this.view = null
     }
 
@@ -29,7 +29,7 @@ class ProfilePresenterImpl(private val getProfileInteractor: GetProfileInteracto
                 .subscribeOn(schedulers.background())
                 .observeOn(schedulers.ui())
                 .subscribe({
-                    view?.showCountries(it)
+                    view?.showCountriesPicker(it)
                 }, { error -> error.printStackTrace() })
     }
 

@@ -24,7 +24,7 @@ class ProfileActivity : AppCompatActivity(), ProfileView {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.detachView(this)
+        presenter.detachView()
     }
 
     private fun initToolbar() {
@@ -47,7 +47,7 @@ class ProfileActivity : AppCompatActivity(), ProfileView {
         presenter.loadCountries()
     }
 
-    override fun showCountries(countries: Collection<Country>) {
+    override fun showCountriesPicker(countries: Collection<Country>) {//called from presenter
         adapter.data = countries.toList()
         adapter.notifyDataSetChanged()
         selectCountry()

@@ -59,21 +59,22 @@ class ProfilePresenterTest {
         `when`(profileRepository.getUserName()).thenReturn(Maybe.just(""))
 
         profilePresenter = ProfilePresenterImpl(
-                getProfileInteractor = GetProfileInteractor(profileRepository, countriesRepository),
-                saveProfileInteractor = saveProfileInteractor)
+                getProfileInteractor = GetProfileInteractor(profileRepository),
+                saveProfileInteractor = saveProfileInteractor,
+                getCountriesInteractor = GetCountriesInteractor(countriesRepository))
 
         profilePresenter.attachView(profileView)
     }
 
     @Test
-    fun loadProfile_ShowCountries() {
+    fun loadProfile_ShowCountry() {
         profilePresenter.loadProfile()
-        verify(profileView).showCountry(ArgumentMatchers.any(), ArgumentMatchers.anyCollection())
+        verify(profileView).showCountry(ArgumentMatchers.any())
     }
 
     @Test
-    fun saveProfile_ShowCountries() {
-        profilePresenter.loadProfile()
-        verify(profileView).showCountry(ArgumentMatchers.any(), ArgumentMatchers.anyCollection())
+    fun loadCountries_ShowCountriesPicker() {
+        profilePresenter.loadCountries()
+        verify(profileView).showCountriesPicker(ArgumentMatchers.anyCollection())
     }
 }
