@@ -18,6 +18,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "view"
+
+    productFlavors {
+        spinner {
+            dimension "view"
+        }
+        popup {
+            dimension "view"
+        }
+    }
 }
 
 dependencies {

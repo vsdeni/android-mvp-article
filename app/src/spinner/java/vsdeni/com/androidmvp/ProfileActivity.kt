@@ -2,7 +2,7 @@ package vsdeni.com.androidmvp
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.spinner.activity_profile.*
 
 
 class ProfileActivity : AppCompatActivity(), ProfileView {
