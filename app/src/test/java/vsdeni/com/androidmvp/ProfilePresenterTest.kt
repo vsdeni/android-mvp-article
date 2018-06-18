@@ -54,8 +54,8 @@ class ProfilePresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        `when`(countriesRepository.getCountries()).thenReturn(Observable.just(ABSENT_COUNTRY))
-        `when`(profileRepository.getUserCountry()).thenReturn(Maybe.just(ABSENT_COUNTRY))
+        `when`(countriesRepository.getCountries()).thenReturn(Observable.just(EMPTY_COUNTRY))
+        `when`(profileRepository.getUserCountry()).thenReturn(Maybe.just(EMPTY_COUNTRY))
         `when`(profileRepository.getUserName()).thenReturn(Maybe.just(""))
 
         profilePresenter = ProfilePresenterImpl(

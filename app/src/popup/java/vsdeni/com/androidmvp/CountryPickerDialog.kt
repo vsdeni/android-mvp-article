@@ -36,6 +36,7 @@ class CountryPickerDialog : DialogFragment() {
             if (activity is OnCountrySelectCallback) {
                 (activity as OnCountrySelectCallback).onCountrySelected(items[position])
             }
+            dismiss()
         }
         view.adapter = adapter
         return view

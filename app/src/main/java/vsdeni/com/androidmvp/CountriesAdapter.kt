@@ -1,6 +1,5 @@
 package vsdeni.com.androidmvp
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class CountriesAdapter : BaseAdapter() {
         holder.title.text = country?.name
         holder.active?.isChecked = country?.id == active?.id ?: -1
         Glide.with(view!!)
-                .load(Uri.parse("file:///android_asset/flags/" + country?.flag_128))
+                .load(country?.flag_128?.asDrawable(view.context))
                 .into(holder.icon)
         return view
     }

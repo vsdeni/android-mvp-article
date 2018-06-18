@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
     }
 
     override fun onCountrySelected(country: Country) {
-
+        showCountry(country)
     }
 
     override fun showName(name: String) {
@@ -37,6 +37,10 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
     override fun showCountry(country: Country?) {
         user_country.text = country?.name
         user_country.tag = country
+        country?.flag_128?.asDrawable(this.applicationContext)
+                ?.let {
+                    user_country.setCompoundDrawablesWithIntrinsicBounds(it, null, null, null)
+                }
     }
 
     override fun showCountriesPicker(countries: Collection<Country>) {
@@ -50,7 +54,6 @@ class ProfileActivity : AppCompatActivity(), ProfileView, OnCountrySelectCallbac
 
     override fun country(): Country =
             user_country.tag as Country
-
 }
 
 interface OnCountrySelectCallback {

@@ -1,10 +1,13 @@
 package vsdeni.com.androidmvp
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.IOException
 
 
-data class Country(val id: Long, val name: String, val flag_32: String, val flag_128: String) : Parcelable {
+data class Country(val id: Long, val name: String, val flag_32: FlagIcon, val flag_128: FlagIcon) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readLong(),
             parcel.readString(),
@@ -37,4 +40,14 @@ data class Country(val id: Long, val name: String, val flag_32: String, val flag
     }
 }
 
-val ABSENT_COUNTRY = Country(-1, "", "", "")
+typealias FlagIcon = String
+
+fun FlagIcon.asDrawable(context: Context): Drawable? =
+        try {
+            Drawable.createFromStream(context.assets.open("flags/"+this), this)
+        } catch (e: IOException) {
+            null
+        }
+
+
+val EMPTY_COUNTRY = Country(-1, "", "", "")

@@ -2,7 +2,6 @@ package vsdeni.com.androidmvp
 
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Function3
 
 
 class GetProfileInteractor(private val profileRepository: ProfileRepository) {
@@ -11,7 +10,7 @@ class GetProfileInteractor(private val profileRepository: ProfileRepository) {
             Single.zip(
                     profileRepository
                             .getUserCountry()
-                            .switchIfEmpty(Single.just(ABSENT_COUNTRY)),
+                            .switchIfEmpty(Single.just(EMPTY_COUNTRY)),
 
                     profileRepository
                             .getUserName()
